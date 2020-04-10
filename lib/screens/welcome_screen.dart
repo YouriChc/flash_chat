@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation animation;
+  final _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -61,10 +63,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
               height: 48.0,
             ),
             RoundedButton(
-              buttonColor: Colors.lightBlue,
-              title: 'Log In',
-              onPressed: () => {Navigator.pushNamed(context, LoginScreen.id)},
-            ),
+                buttonColor: Colors.lightBlue,
+                title: 'Log In',
+                onPressed: () => {
+                      if (_auth.currentUser() != null)
+                        {Navigator.pushNamed(context, LoginScreen.id)}
+                      else
+                        {Navigator.pushNamed(context, RegistrationScreen.id)}
+                    }),
             RoundedButton(
               buttonColor: Colors.blueAccent,
               title: 'Registration',
