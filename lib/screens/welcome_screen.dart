@@ -25,7 +25,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     animationController.forward();
     animationController.addListener(() {
       setState(() {});
-      print(animation.value);
     });
   }
 
